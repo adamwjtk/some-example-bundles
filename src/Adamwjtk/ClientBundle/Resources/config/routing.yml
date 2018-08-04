@@ -1,0 +1,24 @@
+adamwjtk_client_homepage:
+    path:     /main
+    defaults: { _controller: AdamwjtkClientBundle:Main:main }
+adamwjtk_client_product_delete:
+    path: /delete/{id}
+    defaults: { _controller: AdamwjtkClientBundle:Lists:delete }
+adamwjtk_client_product_edit:
+    path: /edit/{id}
+    defaults: { _controller: AdamwjtkClientBundle:Lists:edit }
+adamwjtk_client_product_add:
+    path: /new
+    defaults: { _controller: AdamwjtkClientBundle:Lists:add }
+adamwjtk_client_product_list:
+    path:     /list
+    defaults: { _controller: AdamwjtkClientBundle:Lists:showProductAll }
+adamwjtk_client_product_is_amount_list:
+    path:     /list/is/amount
+    defaults: { _controller: AdamwjtkClientBundle:Main:main }
+adamwjtk_client_product_empty_amount_list:
+    path:     /list/empty/amount
+    defaults: { _controller: AdamwjtkClientBundle:Main:main }
+adamwjtk_client_product_more_than_amount_list:
+    path:     /list/more/amount/{amount}
+    defaults: { _controller: AdamwjtkClientBundle:Main:main }
