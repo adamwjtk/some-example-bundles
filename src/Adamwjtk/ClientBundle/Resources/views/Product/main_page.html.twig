@@ -1,0 +1,41 @@
+{% extends '@AdamwjtkClient/base.html.twig' %}
+{% block title %}ClientApp{% endblock %}
+
+{% block body %}
+    {% for msg in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+    {% endfor %}
+    {% for msg in app.session.flashBag.get('failure') %}
+        <div class="alert alert-warning">
+            {{ msg }}
+        </div>
+    {% endfor %}
+    <div class="pull-right top" style="margin-bottom: 10px; margin-top: 20px;">
+        <a href="{{ path('adamwjtk_client_product_add') }}" class="btn btn-primary pull-right">Nowy Produkt <span class="fa fa-plus-circle"></span></a>
+    </div>
+
+    <section id="js-products-wrapper">
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+
+    <script type="text/babel" src="{{ asset('js/lists.react.js') }}"></script>
+    <script type="text/babel">
+        let notesUrl = '{{ path('api_product_list_all') }}';
+        let editUrl = '{{ path('adamwjtk_client_product_edit' ,{'id': 0} ) }}';
+        let removeUrl = '{{ path('adamwjtk_client_product_delete' ,{'id': 0} ) }}';
+        ReactDOM.render(
+                <ListSection url={notesUrl} eurl={editUrl} rurl={removeUrl} />,
+            document.getElementById('js-products-wrapper')
+        );
+    </script>
+{% endblock %}
+

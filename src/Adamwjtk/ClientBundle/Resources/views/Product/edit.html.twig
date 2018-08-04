@@ -1,0 +1,22 @@
+{% extends '@AdamwjtkClient/base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div>
+            <h1>Edycja Produktu</h1>
+            <div class="form-group">
+                {{ form_start(productForm) }}
+
+                        {{ form_row(productForm.Name,{
+                            'label': 'Nazwa'
+                        }) }}
+                        {{ form_row(productForm.Amount,{
+                            'label': 'Ilość'
+                        }) }}
+                    <button type="submit" class="btn btn-warning">Aktualizuj</button>
+                    <a href="{{ path('adamwjtk_client_product_list') }}" class="btn btn-info">Powrót</a>
+                {{  form_end(productForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
