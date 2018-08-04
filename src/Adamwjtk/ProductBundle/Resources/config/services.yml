@@ -1,0 +1,21 @@
+services:
+  product.product_find_by_id:
+    class: AdamwjtkProductBundle\Service\Read\ProductByIdGet
+    arguments: ["@doctrine.orm.entity_manager"]
+  product.product_delete:
+    class: AdamwjtkProductBundle\Service\Remove\ProductDelete
+    arguments: ["@doctrine.orm.entity_manager"]
+  product.product_add:
+    class: AdamwjtkProductBundle\Service\Create\ProductAdd
+    arguments: ["@doctrine.orm.entity_manager"]
+  product.product_edit:
+    class: AdamwjtkProductBundle\Service\Update\ProductEdit
+    arguments: ["@doctrine.orm.entity_manager"]
+  product.list:
+    class: AdamwjtkProductBundle\Service\Read\ProductList
+    arguments: ["@doctrine.orm.entity_manager"]
+  product.list_where_amount:
+    class: AdamwjtkProductBundle\Service\Read\ProductListByAmount
+    arguments: ["@doctrine.orm.entity_manager"]
+  main.response:
+    class: AdamwjtkProductBundle\Service\Core\Response

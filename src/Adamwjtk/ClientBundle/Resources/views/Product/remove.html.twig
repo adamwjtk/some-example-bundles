@@ -1,0 +1,24 @@
+{% extends '@AdamwjtkClient/base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div>
+            <h1>Usuń Produkt</h1>
+            <div class="form-group">
+                {{ form_start(productForm) }}
+
+                        {{ form_row(productForm.Name,{
+                            'label': 'Nazwa',
+                            'attr':{'disabled':'disabled'}
+                        }) }}
+                        {{ form_row(productForm.Amount,{
+                            'label': 'Ilość',
+                            'attr':{'disabled':'disabled'}
+                        }) }}
+                    <button type="submit" class="btn btn-danger">Usuń</button>
+                    <a href="{{ path('adamwjtk_client_product_list') }}" class="btn btn-info">Powrót</a>
+                {{  form_end(productForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

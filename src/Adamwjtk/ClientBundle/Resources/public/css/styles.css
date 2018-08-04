@@ -1,0 +1,158 @@
+/******************************
+Flexbox Layout
+*******************************/
+
+.header, .navi, .footer {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.header {
+    justify-content: space-between;
+}
+
+.navi {
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.main-content {
+    min-height: 300px;
+}
+
+.footer {
+    justify-content: center;
+}
+
+@media all and (min-width: 700px) {
+    .sea-creature-container {
+        flex-direction: row;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        margin: 30px;
+    }
+}
+
+/******************************
+Top Nav General Styling
+*******************************/
+
+body {
+    margin: 0;
+    color: #3a3a3a;
+}
+
+.header {
+    padding: 10px 0;
+    margin: 0 auto;
+    background-color: #81B9BA;
+}
+
+.logo-icon {
+    height: 50px;
+    width: auto;
+    margin-top: 12px;
+}
+
+.navi {
+    list-style: none;
+}
+
+.navi {
+    padding-top: 25px;
+}
+
+.navi li a {
+    text-decoration: none;
+    color: #3a3a3a;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-right: 10px;
+}
+
+.navi li a:hover {
+    color: #000;
+}
+
+.navi > li > a:focus, .nav > li > a:hover {
+    background-color: transparent;
+}
+
+.navi li:last-child a {
+    background: #eee;
+    border-radius: 2px;
+    transition: 200ms ease-in-out;
+    padding: 8px 16px 7px;
+}
+
+.navi li:last-child a:hover {
+    background: rgba(200, 200, 200, .5);
+    color: #000;
+}
+
+@media all and (min-width: 1030px) {
+    .header {
+        min-width: 768px;
+    }
+
+}
+
+/******************************
+BODY Styling
+*******************************/
+
+
+/* --------------------------------
+
+Main components
+
+-------------------------------- */
+#js-products-wrapper table{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+#js-products-wrapper th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+}
+
+#js-products-wrapper td,tr {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+}
+#js-products-wrapper tr:nth-child(even){background-color: #f2f2f2;}
+
+#js-products-wrapper tr:hover {background-color: #ddd;}
+
+
+/******************************
+FOOTER Styling
+*******************************/
+
+.footer {
+    padding: 20px;
+    background: #E9D4B7;
+    font-size: 1.3em;
+    margin-top: 40px;
+}
+
+.footer-text {
+    color: #3a3a3a;
+}
+
+.footer-text > a {
+    color: #3a3a3a;
+}
+
+.heart {
+    color: red;
+}
