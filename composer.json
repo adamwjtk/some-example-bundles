@@ -1,6 +1,6 @@
 {
     "name": "adamwjtk/some-example-bundles",
-    "description": "homework project",
+    "description": "homework project ",
     "type": "bundle",
     "require": {
         "php": ">=7.1",
