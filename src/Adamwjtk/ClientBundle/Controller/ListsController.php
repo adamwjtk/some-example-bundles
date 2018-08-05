@@ -8,16 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ListsController extends Controller
 {
-    public function showProductHavesAmountAction()
-    {
-
-    }
-
-    public function showProductNoAmountAction()
-    {
-
-    }
-
     public function showProductAllAction()
     {
         return $this->render('@AdamwjtkClient/Product/main_page.html.twig');

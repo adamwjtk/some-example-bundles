@@ -8,7 +8,7 @@ class RaportsController extends Controller
 {
 
     public function mainAction(){
-        dump('pusta strona');
+        return $this->render('@AdamwjtkClient/Raports/main_page.html.twig');
     }
 
     public function emptyAmountAction()

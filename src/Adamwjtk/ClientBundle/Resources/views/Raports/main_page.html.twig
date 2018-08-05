@@ -1,0 +1,20 @@
+{% extends '@AdamwjtkClient/base.html.twig' %}
+{% block title %}ClientApp - Raports{% endblock %}
+
+{% block body %}
+    <div class="pull-left top" style="margin-bottom: 10px; margin-top: 20px;">
+        <a href="{{ path('adamwjtk_client_raports_products_is_amount') }}" class="btn btn-primary left-right">produky na składzie <span class="fa fa-plus-circle"></span></a>
+    </div>
+
+    <div class="center-block" style="margin-bottom: 10px; margin-top: 20px;">
+        <a href="{{ path('adamwjtk_client_raports_products_empty_amount') }}" class="btn btn-primary left-right">produkty puste  <span class="fa fa-plus-circle"></span></a>
+    </div>
+
+    <div class="pull-right top" style="margin-bottom: 10px; margin-top: 20px;">
+        <a href="{{ path('adamwjtk_client_raports_products_more_than_amount', {'amount': 5}) }}" class="btn btn-primary left-right">produkty ze stanem > 5 <span class="fa fa-plus-circle"></span></a>
+    </div>
+
+{% endblock %}
+
+
+
