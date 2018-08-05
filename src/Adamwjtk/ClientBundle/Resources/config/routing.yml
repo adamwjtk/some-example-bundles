@@ -1,6 +1,15 @@
-adamwjtk_client_homepage:
-    path:     /main
-    defaults: { _controller: AdamwjtkClientBundle:Main:main }
+adamwjtk_client_raports:
+    path:     /raports
+    defaults: { _controller: AdamwjtkClientBundle:Raports:main }
+adamwjtk_client_raports_products_empty_amount:
+    path:     /raports/empty/amount
+    defaults: { _controller: AdamwjtkClientBundle:Raports:emptyAmount }
+adamwjtk_client_raports_products_is_amount:
+    path:     /raports/is/amount
+    defaults: { _controller: AdamwjtkClientBundle:Raports:isAmount }
+adamwjtk_client_raports_products_more_than_amount:
+    path:     /raports/more/amount/{amount}
+    defaults: { _controller: AdamwjtkClientBundle:Raports:moreThanAmount }
 adamwjtk_client_product_delete:
     path: /delete/{id}
     defaults: { _controller: AdamwjtkClientBundle:Lists:delete }

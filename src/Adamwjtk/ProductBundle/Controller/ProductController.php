@@ -17,7 +17,7 @@ class ProductController extends Controller
     private $equalFlag;
 
     /**
-     * ProductController constructor.
+     * ProductController constructor
      */
     public function __construct()
     {
@@ -118,7 +118,7 @@ class ProductController extends Controller
     /**
      * @Route("/list/amount/equal/{amount}")
      */
-    public function listAmountEquals(int $amount): JsonResponse
+    public function listAmountEqualsAction(int $amount): JsonResponse
     {
         $response = $this->get('main.response');
         return $response->createResponse(JsonResponse::HTTP_OK,
@@ -128,7 +128,7 @@ class ProductController extends Controller
     /**
      * @Route("/list/amount/lower/{amount}")
      */
-    public function listAmountLowerThan(int $amount): JsonResponse
+    public function listAmountLowerThanAction(int $amount): JsonResponse
     {
         $response = $this->get('main.response');
         return $response->createResponse(JsonResponse::HTTP_OK,
@@ -138,7 +138,7 @@ class ProductController extends Controller
     /**
      * @Route("/list/amount/more/{amount}")
      */
-    public function listAmountMoreThan(int $amount): JsonResponse
+    public function listAmountMoreThanAction(int $amount): JsonResponse
     {
         $response = $this->get('main.response');
         return $response->createResponse(JsonResponse::HTTP_OK,
