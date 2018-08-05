@@ -6,8 +6,7 @@
   "homepage": "https://github.com/adamwjtk/some-example-bundles",
   "autoload": {
     "psr-4": {
-      "AdamwjtkProductBundle\\": "src/Adamwjtk/ProductBundle",
-      "AdamwjtkClientBundle\\": "src/Adamwjtk/ClientBundle"
+      "AdamwjtkProductBundle\\": ""
     }
   },
   "require": {
@@ -28,7 +27,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\": "tests/"
+      "Tests\\": "Tests/"
     }
   }
 }
