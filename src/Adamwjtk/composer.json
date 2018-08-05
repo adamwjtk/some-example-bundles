@@ -1,0 +1,37 @@
+{
+    "name": "adamwjtk/some-example-bundles",
+    "description": "homework project",
+    "type": "bundle",
+    "require": {
+        "php": ">=7.1",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.5",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "sensio/distribution-bundle": "^5.0.19",
+        "sensio/framework-extra-bundle": "^5.0.0",
+        "symfony/monolog-bundle": "^3.1.0",
+        "symfony/polyfill-apcu": "^1.0",
+        "symfony/serializer": "^4.1",
+        "symfony/swiftmailer-bundle": "^2.6.4",
+        "twig/twig": "^1.0||^2.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adam Wojtkiewicz",
+            "email": "adamwjtk@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AdamwjtkProductBundle\\": "src/Adamwjtk/ProductBundle",
+            "AdamwjtkClientBundle\\": "src/Adamwjtk/ClientBundle"
+        }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
