@@ -63,3 +63,10 @@ twig:
 ``` bash
   php bin/console doctrine:schema:update --force
 ```
+
+
+
+7 - run 
+``` yml
+{your.domain}/app_dev.php/client/list
+```
