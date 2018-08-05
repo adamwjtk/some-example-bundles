@@ -17,7 +17,7 @@ class ProductController extends Controller
     private $equalFlag;
 
     /**
-     * ProductController constructor.
+     * ProductController constructor
      */
     public function __construct()
     {

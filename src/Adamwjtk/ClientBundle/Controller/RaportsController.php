@@ -8,7 +8,7 @@ class RaportsController extends Controller
 {
 
     public function mainAction(){
-
+        dump('pusta strona');
     }
 
     public function emptyAmountAction()
