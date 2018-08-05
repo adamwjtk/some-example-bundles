@@ -32,7 +32,25 @@ adamwjtk_product:
     prefix:   /api/v1/product
 ```
 
-4 - move assets from \vendor\adamwjtk\some-example-bundles\src\Adamwjtk\ClientBundle\Resources\public to \web and set up
+4 - register services
+
+``` yaml
+# app/config/services.yml
+
+    AdamwjtkClientBundle:
+        autowire: true
+        autoconfigure: true
+        synthetic: true
+        public: true
+
+    AdamwjtkProductBundle:
+        autowire: true
+        autoconfigure: true
+        synthetic: true
+        public: true
+```
+
+5 - move assets from \vendor\adamwjtk\some-example-bundles\src\Adamwjtk\ClientBundle\Resources\public to \web and set up
 config.yml like this :
 ``` yaml
 twig:
@@ -41,7 +59,7 @@ twig:
       - bootstrap_3_layout.html.twig
 ```
 
-5 - update db
+6 - update db
 ``` bash
   php bin/console doctrine:schema:update --force
 ```
