@@ -4,7 +4,7 @@ namespace AdamwjtkProductBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class productRepository extends EntityRepository
+class ProductRepository extends EntityRepository
 {
     /**
      * @var array
