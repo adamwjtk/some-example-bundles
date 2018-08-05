@@ -28,7 +28,6 @@
             "AdamwjtkClientBundle\\": "src/Adamwjtk/ClientBundle"
         }
     },
-    "minimum-stability": "dev-master",
     "extra": {
         "branch-alias": {
             "dev": "0.1-dev",
