@@ -5,7 +5,7 @@ namespace AdamwjtkProductBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="AdamwjtkProductBundle\Repository\productRepository")
+ * @ORM\Entity(repositoryClass="AdamwjtkProductBundle\Repository\ProductRepository")
  * @ORM\Table(name="items")
  */
 class Product
