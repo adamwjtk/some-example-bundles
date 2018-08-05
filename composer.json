@@ -4,14 +4,17 @@
     "type": "bundle",
     "require": {
         "php": ">=7.1",
+        "symfony/framework-bundle": "^3.4",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "incenteev/composer-parameter-handler": "^2.0",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
-        "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
         "twig/twig": "^1.0||^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
     },
     "license": "MIT",
     "authors": [
@@ -24,6 +27,11 @@
         "psr-4": {
             "AdamwjtkProductBundle\\": "src/Adamwjtk/ProductBundle",
             "AdamwjtkClientBundle\\": "src/Adamwjtk/ClientBundle"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "Tests/"
         }
     },
     "extra": {
