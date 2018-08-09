@@ -3,7 +3,7 @@
 namespace AdamwjtkProductBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ProductController extends Controller
@@ -26,33 +26,26 @@ class ProductController extends Controller
         $this->setMoreFlag();
     }
 
-    /**
-     * @Route("/getby/id/{id}")
-     */
-    public function getByIdAction(int $id)
+    public function getProductByIdAction(int $id)
     {
         $service = $this->get('product.product_find_by_id');
-        $product = $service->getProduct($id);
+        $service->findProduct($id);
         $response = $this->get('main.response');
-        if (null != $product) {
+        if (null != $service->getProduct()) {
             return $response->createResponse(JsonResponse::HTTP_OK,
                 true, $response::ProductGetById, [
                     'product' => [
-                        'id' => $product->getId(),
-                        'amount' => $product->getAmount(),
-                        'name' => $product->getName()
+                        'id' => $service->getProduct()->getId(),
+                        'amount' => $service->getProduct()->getAmount(),
+                        'name' => $service->getProduct()->getName()
                     ]
                 ]);
         }
-        return $response->createResponse(JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
+        return $response->createResponse(JsonResponse::HTTP_NOT_FOUND,
             false, $response::ProductGetByIdFalse);
     }
 
-    /**
-     * @Route("/delete/{id}", name="api_product_delete")
-     *
-     */
-    public function deleteAction(int $id): JsonResponse
+    public function deleteProductAction(int $id): JsonResponse
     {
         $product = $this->get('product.product_delete');
         $siRemove = $product->deleteProduct($id);
@@ -62,15 +55,10 @@ class ProductController extends Controller
             return $response->createResponse(JsonResponse::HTTP_NO_CONTENT,
                 true, $response::ProductDeleted, []);
         }
-        return $response->createResponse(JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
+        return $response->createResponse(JsonResponse::HTTP_NOT_FOUND,
             false, $response::ProductDeletedFalse);
     }
 
-
-    /**
-     * @Route("/edit/{id}/{name}/{amount}", name="api_product_edit")
-     *
-     */
     public function editAction(int $id, string $name, int $amount): JsonResponse
     {
         $product = $this->get('product.product_edit');
@@ -81,33 +69,35 @@ class ProductController extends Controller
             return $response->createResponse(JsonResponse::HTTP_ACCEPTED,
                 true, $response::ProductEdited, ['id' => $id]);
         }
-        return $response->createResponse(JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
+        return $response->createResponse(JsonResponse::HTTP_NOT_FOUND,
             false, $response::ProductEditedFalse);
     }
 
-    /**
-     * @Route("/new/{name}/{amount}", name="api_product_add")
-     *
-     */
-    public function newAction(string $name, int $amount = 0): JsonResponse
+
+    public function postNewAction(Request $request): JsonResponse
     {
-        $product = $this->get('product.product_add');
-        $newProduct = $product->newProduct($name, $amount);
+        $setFieldService = $this->get('product.field_set');
         $response = $this->get('main.response');
+        $setFieldService->setFields($request);
 
-        if (0 < $newProduct->getId()) {
+        if($setFieldService->isStatus()){
+            $product = $this->get('product.product_add');
+            $newProduct = $product->newProduct($setFieldService->getName(), $setFieldService->get);
 
-            return $response->createResponse(JsonResponse::HTTP_CREATED,
-                true, $response::ProductCreated, ['id' => $newProduct->getId()]);
+            if (0 < $newProduct->getId()) {
+
+                return $response->createResponse(JsonResponse::HTTP_CREATED,
+                    true, $response::ProductCreated, ['id' => $newProduct->getId()]);
+            }
         }
         return $response->createResponse(JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
             false, $response::ProductCreatedFalse);
     }
 
     /**
-     * @Route("/list", name="api_product_list_all")
+     * @return JsonResponse
      */
-    public function listAction(): JsonResponse
+    public function listAllAction(): JsonResponse
     {
 
         $response = $this->get('main.response');
@@ -116,7 +106,8 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/list/amount/equal/{amount}")
+     * @param int $amount
+     * @return JsonResponse
      */
     public function listAmountEqualsAction(int $amount): JsonResponse
     {
@@ -126,7 +117,8 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/list/amount/lower/{amount}")
+     * @param int $amount
+     * @return JsonResponse
      */
     public function listAmountLowerThanAction(int $amount): JsonResponse
     {
@@ -136,7 +128,8 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/list/amount/more/{amount}")
+     * @param int $amount
+     * @return JsonResponse
      */
     public function listAmountMoreThanAction(int $amount): JsonResponse
     {

@@ -32,7 +32,7 @@
 
     <script type="text/babel" src="{{ asset('js/lists.react.js') }}"></script>
     <script type="text/babel">
-        let notesUrl = '{{ path('api_product_list_all') }}';
+        let notesUrl = '{{ path('api_adamwjtk_product_get_all') }}';
         let editUrl = '{{ path('adamwjtk_client_product_edit' ,{'id': 0} ) }}';
         let removeUrl = '{{ path('adamwjtk_client_product_delete' ,{'id': 0} ) }}';
         ReactDOM.render(

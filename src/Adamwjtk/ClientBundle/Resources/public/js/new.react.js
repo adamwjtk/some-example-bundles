@@ -11,7 +11,9 @@ let AjaxSection = React.createClass({
 
     rest: function() {
         $.ajax({
+            method: "POST",
             url: this.props.url,
+            data: { name: this.props.name, amount: this.props.amount },
             success: function (data) {
                 this.setState({response: data});
             }.bind(this)

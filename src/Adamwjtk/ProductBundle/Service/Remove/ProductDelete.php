@@ -29,7 +29,7 @@ class ProductDelete
     {
         $product = $this->em->getRepository(Product::class)
             ->find($id);
-        if(!$product){
+        if(null === $product){
             return false;
         }
         $this->em->remove($product);
