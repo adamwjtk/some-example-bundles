@@ -14,16 +14,20 @@ class ListsController extends Controller
     }
 
     public function deleteAction(int $id, Request $request){
-        $jsonResponse = $this->forward('AdamwjtkProductBundle:Product:getById',[
+        $jsonResponse = $this->forward('AdamwjtkProductBundle:Product:getProductById',[
             'id'=>$id
         ])->getContent();
-        $product = json_decode($jsonResponse);
 
+        $product = json_decode($jsonResponse);
+        if(false === $product->status){
+            $this->addFlash('failure',$product->message);
+            return $this->redirectToRoute('adamwjtk_client_product_list');
+        };
         $form = $this->createForm(ProductForm::class,['Name'=>$product->body->product->name
             ,'Amount'=>$product->body->product->amount]);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $jsonResponse = $this->forward('AdamwjtkProductBundle:Product:delete',[
+            $jsonResponse = $this->forward('AdamwjtkProductBundle:Product:deleteProduct',[
                 'id' => $product->body->product->id,])->getContent();
             $response = json_decode($jsonResponse);
             if($response->status){
@@ -43,10 +47,14 @@ class ListsController extends Controller
 
     public function editAction(int $id, Request $request){
 
-        $jsonResponse = $this->forward('AdamwjtkProductBundle:Product:getById',[
+        $jsonResponse = $this->forward('AdamwjtkProductBundle:Product:getProductById',[
             'id'=>$id
         ])->getContent();
         $product = json_decode($jsonResponse);
+        if(false === $product->status){
+            $this->addFlash('failure',$product->message);
+            return $this->redirectToRoute('adamwjtk_client_product_list');
+        };
         $form = $this->createForm(ProductForm::class,['Name'=>$product->body->product->name
             ,'Amount'=>$product->body->product->amount]);
         $form->handleRequest($request);

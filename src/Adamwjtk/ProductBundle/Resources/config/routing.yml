@@ -1,0 +1,32 @@
+api_adamwjtk_product_add:
+    path: "/new"
+    defaults: { _controller: AdamwjtkProductBundle:Product:postNew }
+    methods: [POST]
+api_adamwjtk_product_get_by_id:
+    path: "/getby/id/{id}"
+    defaults: { _controller: AdamwjtkProductBundle:Product:getProductById }
+    methods: [GET]
+api_adamwjtk_product_delete:
+    path: "/{id}/delete"
+    defaults: { _controller: AdamwjtkProductBundle:Product:deleteProduct }
+    methods: [DELETE]
+api_adamwjtk_product_edit:
+    path: "/{id}/edit"
+    defaults: { _controller: AdamwjtkProductBundle:Product:edit }
+    methods: [PUT]
+api_adamwjtk_product_get_all:
+     path: "/list"
+     defaults: { _controller: AdamwjtkProductBundle:Product:listAll }
+     methods: [GET]
+api_adamwjtk_product_get_equal_amount:
+     path: "/list/amount/{amount}/equal"
+     defaults: { _controller: AdamwjtkProductBundle:Product:listAmountEquals }
+     methods: [GET]
+api_adamwjtk_product_get_lower_amount:
+     path: "/list/amount/{amount}/lower"
+     defaults: { _controller: AdamwjtkProductBundle:Product:listAmountLowerThan }
+     methods: [GET]
+api_adamwjtk_product_get_more_amount:
+     path: "/list/amount/{amount}/more"
+     defaults: { _controller: AdamwjtkProductBundle:Product:listAmountMoreThan }
+     methods: [GET]

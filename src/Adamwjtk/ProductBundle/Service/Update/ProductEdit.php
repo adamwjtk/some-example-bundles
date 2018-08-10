@@ -2,8 +2,8 @@
 
 namespace AdamwjtkProductBundle\Service\Update;
 
-use AdamwjtkProductBundle\Entity\Product;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ProductEdit
 {
@@ -16,7 +16,7 @@ class ProductEdit
      * ProductEdit constructor.
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -29,7 +29,7 @@ class ProductEdit
      */
     public function editProduct(int $id, string $name, int $amount): bool
     {
-        $product = $this->em->getRepository(Product::class)
+        $product = $this->em->getRepository("AdamwjtkProductBundle:Product")
             ->find($id);
 
         if (!$product) {
