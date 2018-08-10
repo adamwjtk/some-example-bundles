@@ -2,7 +2,7 @@ Readme
 =====
 1 - Install the bundle
 ``` bash
-composer require adamwjtk/some-example-bundles
+composer require adamwjtk/some-example-bundles dev-master
 ```
 2 - Enable the bundles in the kernel:
 
