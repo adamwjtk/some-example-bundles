@@ -51,14 +51,14 @@ class ProductFieldsSet
     {
         $this->amount = $amount;
     }
+
     private $amount;
 
-    public function setFields(Request $post){
+    public function setFields(Request $post)
+    {
 
-        if($post->get('name') && $post->get('amount')){
-            $this->setName($post->get('name'));
-            $this->setAmount($post->get('amount'));
-            $this->status = true;
-        }
+        $this->setName($post->get('name'));
+        $this->setAmount($post->get('amount'));
+        $this->status = true;
     }
 }

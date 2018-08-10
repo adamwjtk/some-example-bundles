@@ -37,8 +37,8 @@ adamwjtk_product:
 # app/config/services.yml
 
     AdamwjtkProductBundle\:
-      resource: '../../src/Adamwjtk/ProductBundle/*'
-      exclude: '../../src/Adamwjtk/ProductBundle/{Entity,Repository,Tests}'
+        resource: '../../vendor/adamwjtk/some-example-bundles/src/Adamwjtk/ProductBundle/*'
+        exclude: '../../vendor/adamwjtk/some-example-bundles/src/Adamwjtk/ProductBundle/{Entity,Repository,Tests}'
 ```
 
 ```yaml
