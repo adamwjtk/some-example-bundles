@@ -2,10 +2,23 @@
 
 namespace AdamwjtkProductBundle\Controller;
 
+use AdamwjtkProductBundle\Service\Core\Response;
+use AdamwjtkProductBundle\Service\Create\ProductAdd;
+use AdamwjtkProductBundle\Service\Create\ProductFieldsSet;
+use AdamwjtkProductBundle\Service\Read\ProductByIdGet;
+use AdamwjtkProductBundle\Service\Read\ProductList;
+use AdamwjtkProductBundle\Service\Read\ProductListByAmount;
+use AdamwjtkProductBundle\Service\Remove\ProductDelete;
+use AdamwjtkProductBundle\Service\Update\ProductEdit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+
+/**
+ * Class ProductController
+ * @package AdamwjtkProductBundle\Controller
+ */
 class ProductController extends Controller
 {
     private const LOWER = 'lower';
@@ -16,133 +29,156 @@ class ProductController extends Controller
     private $moreFlag;
     private $equalFlag;
 
+    protected $response;
+    protected $productList;
+
     /**
-     * ProductController constructor
+     * ProductController constructor.
+     * @param Response $response
+     * @param ProductList $productList
      */
-    public function __construct()
+    public function __construct(Response $response, ProductList $productList)
     {
+        $this->response = $response;
+        $this->productList = $productList;
         $this->setEqualFlag();
         $this->setLoverFlag();
         $this->setMoreFlag();
     }
 
     /**
-     * @Route("/getby/id/{id}")
+     * @param int $id
+     * @param ProductByIdGet $productByIdGet
+     * @return JsonResponse
      */
-    public function getByIdAction(int $id)
+    public function getProductByIdAction(int $id, ProductByIdGet $productByIdGet)
     {
-        $service = $this->get('product.product_find_by_id');
-        $product = $service->getProduct($id);
-        $response = $this->get('main.response');
-        if (null != $product) {
-            return $response->createResponse(JsonResponse::HTTP_OK,
-                true, $response::ProductGetById, [
+        $productByIdGet->findProduct($id);
+
+        if (null != $productByIdGet->getProduct()) {
+            return $this->response->createResponse(JsonResponse::HTTP_OK,
+                true, $this->response::ProductGetById, [
                     'product' => [
-                        'id' => $product->getId(),
-                        'amount' => $product->getAmount(),
-                        'name' => $product->getName()
+                        'id' => $productByIdGet->getProduct()->getId(),
+                        'amount' => $productByIdGet->getProduct()->getAmount(),
+                        'name' => $productByIdGet->getProduct()->getName()
                     ]
                 ]);
         }
-        return $response->createResponse(JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
-            false, $response::ProductGetByIdFalse);
+        return $this->response->createResponse(JsonResponse::HTTP_NOT_FOUND,
+            false, $this->response::ProductGetByIdFalse);
     }
 
     /**
-     * @Route("/delete/{id}", name="api_product_delete")
-     *
+     * @param int $id
+     * @param ProductDelete $productDelete
+     * @return JsonResponse
      */
-    public function deleteAction(int $id): JsonResponse
+    public function deleteProductAction(int $id, ProductDelete $productDelete): JsonResponse
     {
-        $product = $this->get('product.product_delete');
-        $siRemove = $product->deleteProduct($id);
-        $response = $this->get('main.response');
+        $siRemove = $productDelete->deleteProduct($id);
 
         if ($siRemove) {
-            return $response->createResponse(JsonResponse::HTTP_NO_CONTENT,
-                true, $response::ProductDeleted, []);
+            return $this->response->createResponse(JsonResponse::HTTP_OK,
+                true, $this->response::ProductDeleted, []);
         }
-        return $response->createResponse(JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
-            false, $response::ProductDeletedFalse);
+        return $this->response->createResponse(JsonResponse::HTTP_NOT_FOUND,
+            false, $this->response::ProductDeletedFalse);
     }
 
-
     /**
-     * @Route("/edit/{id}/{name}/{amount}", name="api_product_edit")
-     *
+     * @param int $id
+     * @param ProductEdit $productEdit
+     * @param ProductFieldsSet $productFieldsSet
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function editAction(int $id, string $name, int $amount): JsonResponse
+    public function editAction(int $id, ProductEdit $productEdit, ProductFieldsSet $productFieldsSet,
+                               Request $request): JsonResponse
     {
-        $product = $this->get('product.product_edit');
-        $isChange = $product->editProduct($id, $name, $amount);
-        $response = $this->get('main.response');
+        $productFieldsSet->setFields($request);
 
-        if ($isChange) {
-            return $response->createResponse(JsonResponse::HTTP_ACCEPTED,
-                true, $response::ProductEdited, ['id' => $id]);
+        if ($productFieldsSet->isStatus()) {
+            $isChange = $productEdit->editProduct($id, $productFieldsSet->getName(), $productFieldsSet->getAmount());
+
+            if ($isChange) {
+                return $this->response->createResponse(JsonResponse::HTTP_ACCEPTED,
+                    true, $this->response::ProductEdited, ['id' => $id]);
+            }
         }
-        return $response->createResponse(JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
-            false, $response::ProductEditedFalse);
+
+        return $this->response->createResponse(JsonResponse::HTTP_NOT_FOUND,
+            false, $this->response::ProductEditedFalse);
     }
 
     /**
-     * @Route("/new/{name}/{amount}", name="api_product_add")
-     *
+     * @param Request $request
+     * @param ProductFieldsSet $productFieldsSet
+     * @param ProductAdd $productAdd
+     * @return JsonResponse
      */
-    public function newAction(string $name, int $amount = 0): JsonResponse
+    public function postNewAction(Request $request, ProductFieldsSet $productFieldsSet,
+                                  ProductAdd $productAdd): JsonResponse
     {
-        $product = $this->get('product.product_add');
-        $newProduct = $product->newProduct($name, $amount);
-        $response = $this->get('main.response');
 
-        if (0 < $newProduct->getId()) {
+        $productFieldsSet->setFields($request);
 
-            return $response->createResponse(JsonResponse::HTTP_CREATED,
-                true, $response::ProductCreated, ['id' => $newProduct->getId()]);
+        if ($productFieldsSet->isStatus()) {
+            $newProduct = $productAdd->newProduct($productFieldsSet->getName(), $productFieldsSet->getAmount());
+
+            if (0 < $newProduct->getId()) {
+
+                return $this->response->createResponse(JsonResponse::HTTP_CREATED,
+                    true, $this->response::ProductCreated, ['id' => $newProduct->getId()]);
+            }
         }
-        return $response->createResponse(JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
-            false, $response::ProductCreatedFalse);
+        return $this->response->createResponse(JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
+            false, $this->response::ProductCreatedFalse);
     }
 
     /**
-     * @Route("/list", name="api_product_list_all")
+     * @return JsonResponse
      */
-    public function listAction(): JsonResponse
+    public function listAllAction(): JsonResponse
     {
-
-        $response = $this->get('main.response');
-        return $response->createResponse(JsonResponse::HTTP_OK,
-            true, $response::ProductList, ['products' => $this->get('product.list')->list()]);
+        return $this->response->createResponse(JsonResponse::HTTP_OK,
+            true, $this->response::ProductList, ['products' => $this->productList->list()]);
     }
 
     /**
-     * @Route("/list/amount/equal/{amount}")
+     * @param int $amount
+     * @param ProductListByAmount $productListByAmount
+     * @param Response $response
+     * @return JsonResponse
      */
-    public function listAmountEqualsAction(int $amount): JsonResponse
+    public function listAmountEqualsAction(int $amount, ProductListByAmount $productListByAmount, Response $response): JsonResponse
     {
-        $response = $this->get('main.response');
         return $response->createResponse(JsonResponse::HTTP_OK,
-            true, $response::ProductListAmountEquals . ' ' . $amount, ['products' => $this->get('product.list_where_amount')->list($amount, $this->equalFlag)]);
+            true, $response::ProductListAmountEquals . ' ' . $amount, ['products' => $productListByAmount->list($amount, $this->equalFlag)]);
     }
 
     /**
-     * @Route("/list/amount/lower/{amount}")
+     * @param int $amount
+     * @param ProductListByAmount $productListByAmount
+     * @param Response $response
+     * @return JsonResponse
      */
-    public function listAmountLowerThanAction(int $amount): JsonResponse
+    public function listAmountLowerThanAction(int $amount, ProductListByAmount $productListByAmount, Response $response): JsonResponse
     {
-        $response = $this->get('main.response');
         return $response->createResponse(JsonResponse::HTTP_OK,
-            true, $response::ProductListAmountLowerThan . ' ' . $amount, ['products' => $this->get('product.list_where_amount')->list($amount, $this->loverFlag)]);
+            true, $response::ProductListAmountLowerThan . ' ' . $amount, ['products' => $productListByAmount->list($amount, $this->loverFlag)]);
     }
 
     /**
-     * @Route("/list/amount/more/{amount}")
+     * @param int $amount
+     * @param ProductListByAmount $productListByAmount
+     * @param Response $response
+     * @return JsonResponse
      */
-    public function listAmountMoreThanAction(int $amount): JsonResponse
+    public function listAmountMoreThanAction(int $amount, ProductListByAmount $productListByAmount, Response $response): JsonResponse
     {
-        $response = $this->get('main.response');
         return $response->createResponse(JsonResponse::HTTP_OK,
-            true, $response::ProductListAmountMoreThan . ' ' . $amount, ['products' => $this->get('product.list_where_amount')->list($amount, $this->moreFlag)]);
+            true, $response::ProductListAmountMoreThan . ' ' . $amount, ['products' => $productListByAmount->list($amount, $this->moreFlag)]);
     }
 
     public function setLoverFlag()

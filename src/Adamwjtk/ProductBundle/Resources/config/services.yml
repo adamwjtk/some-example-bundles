@@ -17,5 +17,7 @@ services:
   product.list_where_amount:
     class: AdamwjtkProductBundle\Service\Read\ProductListByAmount
     arguments: ["@doctrine.orm.entity_manager"]
+  product.field_set:
+    class: AdamwjtkProductBundle\Service\Create\ProductFieldsSet
   main.response:
     class: AdamwjtkProductBundle\Service\Core\Response

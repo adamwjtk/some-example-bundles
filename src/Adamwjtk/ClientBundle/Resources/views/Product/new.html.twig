@@ -3,24 +3,24 @@
 {% block body %}
     <div class="container">
         {% if ajax %}
-        <div id="js-client-api-response">
+            <div id="js-client-api-response">
 
-        </div>
+            </div>
         {% endif %}
         <div>
             <h1>Nowy Produkt</h1>
             <div class="form-group">
                 {{ form_start(productForm) }}
 
-                        {{ form_row(productForm.Name,{
-                            'label': 'Nazwa'
-                        }) }}
-                        {{ form_row(productForm.Amount,{
-                            'label': 'Ilość'
-                        }) }}
-                    <button type="submit" class="btn btn-success">Dodaj</button>
+                {{ form_row(productForm.Name,{
+                    'label': 'Nazwa'
+                }) }}
+                {{ form_row(productForm.Amount,{
+                    'label': 'Ilość'
+                }) }}
+                <button type="submit" class="btn btn-success">Dodaj</button>
                 <a href="{{ path('adamwjtk_client_product_list') }}" class="btn btn-info">Powrót</a>
-                {{  form_end(productForm) }}
+                {{ form_end(productForm) }}
             </div>
         </div>
     </div>
@@ -35,14 +35,11 @@
     <script type="text/babel" src="{{ asset('js/new.react.js') }}"></script>
     <script type="text/babel">
         {% if ajax %}
-        let url = '{{ path('api_product_add', {
-            'name' : name_val,
-            'amount' : amount_val
-        }
-        ) }}';
-
+        let url = '{{ path('api_adamwjtk_product_add') }}';
+        let name_val ='{{ name_val }}';
+        let amount_val = '{{ amount_val }}';
         ReactDOM.render(
-                <AjaxSection url={url} />,
+                <AjaxSection url={url} name={name_val} amount={amount_val} />,
             document.getElementById('js-client-api-response')
         );
         {% endif %}

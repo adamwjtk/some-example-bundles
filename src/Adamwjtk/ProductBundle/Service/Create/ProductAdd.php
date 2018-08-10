@@ -4,6 +4,7 @@ namespace AdamwjtkProductBundle\Service\Create;
 
 use AdamwjtkProductBundle\Entity\Product;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ProductAdd
 {
@@ -16,7 +17,7 @@ class ProductAdd
      * ProductAdd constructor.
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }

@@ -27,8 +27,7 @@ adamwjtk_client:
     prefix: /client
 
 adamwjtk_product:
-    resource: "@AdamwjtkProductBundle/Controller/"
-    type: annotation
+    resource: "@AdamwjtkProductBundle/Resources/config/routing.yml"
     prefix:   /api/v1/product
 ```
 
@@ -37,17 +36,18 @@ adamwjtk_product:
 ``` yaml
 # app/config/services.yml
 
-    AdamwjtkClientBundle:
-        autowire: true
-        autoconfigure: true
-        synthetic: true
-        public: true
 
-    AdamwjtkProductBundle:
-        autowire: true
-        autoconfigure: true
-        synthetic: true
-        public: true
+    AdamwjtkProductBundle\:
+        resource: '../../vendor/adamwjtk/some-example-bundles/src/Adamwjtk/ProductBundle/*'
+        exclude: '../../vendor/adamwjtk/some-example-bundles/src/Adamwjtk/ProductBundle/{Entity,Repository,Tests}'
+```
+
+```yaml
+# app/config/config.yml
+imports:
+
+    - { resource: "@AdamwjtkProductBundle/Resources/config/services.yml"} 
+
 ```
 
 5 - move assets from \vendor\adamwjtk\some-example-bundles\src\Adamwjtk\ClientBundle\Resources\public to \web and set up
