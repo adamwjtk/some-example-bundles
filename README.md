@@ -36,6 +36,7 @@ adamwjtk_product:
 ``` yaml
 # app/config/services.yml
 
+
     AdamwjtkProductBundle\:
         resource: '../../vendor/adamwjtk/some-example-bundles/src/Adamwjtk/ProductBundle/*'
         exclude: '../../vendor/adamwjtk/some-example-bundles/src/Adamwjtk/ProductBundle/{Entity,Repository,Tests}'
@@ -46,6 +47,7 @@ adamwjtk_product:
 imports:
 
     - { resource: "@AdamwjtkProductBundle/Resources/config/services.yml"} 
+
 ```
 
 5 - move assets from \vendor\adamwjtk\some-example-bundles\src\Adamwjtk\ClientBundle\Resources\public to \web and set up
