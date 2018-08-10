@@ -8,7 +8,7 @@ api_adamwjtk_product_get_by_id:
     methods: [GET]
 api_adamwjtk_product_delete:
     path: "/{id}/delete"
-    defaults: { _controller: AdamwjtkProductBundle:Product:deleteProductAction }
+    defaults: { _controller: AdamwjtkProductBundle:Product:deleteProduct }
     methods: [DELETE]
 api_adamwjtk_product_edit:
     path: "/{id}/edit"

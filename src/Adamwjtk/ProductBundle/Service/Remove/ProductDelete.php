@@ -2,8 +2,8 @@
 
 namespace AdamwjtkProductBundle\Service\Remove;
 
-use AdamwjtkProductBundle\Entity\Product;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ProductDelete
 {
@@ -16,7 +16,7 @@ class ProductDelete
      * ProductDelete constructor.
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -27,9 +27,9 @@ class ProductDelete
      */
     public function deleteProduct(int $id): bool
     {
-        $product = $this->em->getRepository(Product::class)
+        $product = $this->em->getRepository("AdamwjtkProductBundle:Product")
             ->find($id);
-        if(null === $product){
+        if (null === $product) {
             return false;
         }
         $this->em->remove($product);

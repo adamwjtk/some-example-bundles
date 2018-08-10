@@ -4,6 +4,7 @@ namespace AdamwjtkProductBundle\Service\Read;
 
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ProductListByAmount
 {
@@ -16,7 +17,7 @@ class ProductListByAmount
      * ProductListByAmountEqual constructor.
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
